@@ -1,0 +1,38 @@
+{
+  "name": "flitsr-extension-demo",
+  "displayName": "flitsr-extension-demo",
+  "description": "This is a demo extension for flitsr project version 1",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [{
+      "command": "flitsr-extension-demo.uploadCoverageFile",
+      "title": "Upload Coverage File"
+    },
+    {
+      "command": "flitsr-extension-demo.uploadCoverageFolder",
+      "title": "Upload Coverage Folder"
+    }]
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "@vscode/test-cli": "^0.0.4",
+    "@vscode/test-electron": "^2.3.9"
+  }
+}
