@@ -32,7 +32,12 @@ async function runProjectWithInputFile(inputFilePath, fileName,  dir) {
         if (stderr) {
             console.error(`Std Error: ${stderr}`);
         }
-		vscode.window.showInformationMessage(`Output for "${userInput}" : ${stdout}`);
+		if (userInput == 'all') {
+			vscode.window.showInformationMessage(`Done. Check the corresponding folder for output files.`);
+		}
+		else {
+			vscode.window.showInformationMessage(`Output for "${userInput}" : ${stdout}`);
+		}
     });
 }
 
@@ -40,24 +45,27 @@ async function runProjectWithInputFile(inputFilePath, fileName,  dir) {
 //example: run_all tcm
 function runProjectWithInputFolder(inputFolderPath) {
     const FLITSR_HOME= '/home/angela/Desktop/FLITSR/flitsr';
+	const PATH= '/home/angela/Desktop/FLITSR/flitsr/bin';
 	//const command1= `${FLITSR_HOME}/bin/flitsr`;	
-	const command1 = `${FLITSR_HOME}/bin/run_all tcm`;
+	const command1 = `${PATH}/run_all tcm`;
 	console.log("Input Folder : ",inputFolderPath);
 	console.log("Command ran : ", command1);
 
 	const env = Object.create(process.env);
-	env.PATH = `${FLITSR_HOME}${path.delimiter}${env.PATH}`;
+	env.PATH = `${FLITSR_HOME}${path.delimiter}${PATH}${path.delimiter}${env.PATH}`;
 	console.log("PATH: ", env.PATH);
-    exec(command1, { cwd: inputFolderPath, env: env.PATH}, (error, stdout, stderr) => {
-        if (error) {
-            console.error(`Error executing command: ${error}`);
-            return;
-        }
-        console.log(`Output: ${stdout}`);
-        if (stderr) {
-            console.error(`Std Error: ${stderr}`);
-        }
-    });
+	const childProcess = exec(command1, { cwd: inputFolderPath, env: env.PATH});
+
+    childProcess.stdout.on('data', (data) => {
+		console.log(`stdout: ${data}`);
+	});
+	childProcess.stderr.on('data', (data) => {
+		console.error(`stderr: ${data}`);
+	});
+	childProcess.on('close', (code) => {
+		console.log(`Child process exited with code ${code}`);
+	});
+
 }
 
 
