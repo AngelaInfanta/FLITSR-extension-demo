@@ -19,6 +19,10 @@
     {
       "command": "flitsr-extension-demo.uploadCoverageFolder",
       "title": "Upload Coverage Folder"
+    },
+    {
+      "command": "flitsr-extension-demo.showInputPanel",
+      "title": "Show Input Panel"
     }]
   },
   "scripts": {
