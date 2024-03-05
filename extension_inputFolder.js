@@ -16,7 +16,6 @@ function runProjectWithInputFolder(inputFolderPath, outputChannel) {
 
 	const env = Object.create(process.env);
 	env.PATH = `${FLITSR_HOME}${path.delimiter}${PATH}${path.delimiter}${env.PATH}`;
-	outputChannel.appendLine("PATH: ", env.PATH);
 	const childProcess = exec(command1, { cwd: inputFolderPath, env: env.PATH});
 
     childProcess.stdout.on('data', (data) => {
@@ -29,6 +28,7 @@ function runProjectWithInputFolder(inputFolderPath, outputChannel) {
 		outputChannel.appendLine(`Results generating..`);
 		if (code == 0){
 			outputChannel.appendLine(`Done. Check the corresponding folder for generated result.`);
+			outputChannel.appendLine("-------------------------------------------------------------------------");
 		}
 	});
 

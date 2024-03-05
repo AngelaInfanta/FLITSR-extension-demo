@@ -3,6 +3,7 @@
 const { runProjectWithInputFile } = require('./extension_inputFile');
 const { runProjectWithInputFolder } = require('./extension_inputFolder');
 const { inputPercent_at_n_file} = require('./extension_percentAtNPlot');
+const {testUserInterface} = require('./extension_userinterface');
 
 // Use the imported functions in your extension
 
@@ -37,7 +38,7 @@ function activate(context) {
 	let disposable3 = vscode.commands.registerCommand('flitsr-extension-demo.showInputPanel', () => {
         const panel = vscode.window.createWebviewPanel(
             'inputPanel', // Identifies the type of the webview. Used internally
-            'Input Panel', // Title of the panel displayed to the user
+            'Input Panel for Localisation', // Title of the panel displayed to the user
             vscode.ViewColumn.One, // Editor column to show the new webview panel in
             {
                 enableScripts: true, // Enable JavaScript in the webview panel
@@ -46,24 +47,30 @@ function activate(context) {
 
 		const htmlPath = path.join(context.extensionPath, 'extension_inputPanel.html');
         const htmlContent = fs.readFileSync(htmlPath, 'utf8');
+
         // HTML content for the webview panel
         panel.webview.html = htmlContent;
+
 		panel.webview.onDidReceiveMessage(message => {
 			switch (message.command) {
 				case 'submitForm':
 					const { flitsr_arg,  fileName, filePath,folderPath } = JSON.parse(message.data);
-					// Pass the data to your functions
-					//testUserInterface(flitsr_arg,  fileName, filePath, folderPath);
-					                    // Process the file path and show the output in the output channel
+					// Process the file path and show the output in the output channel
 					try {					
 						outputChannel.appendLine('Input flitsr Argument: ' + flitsr_arg);
 							outputChannel.appendLine('File Name: ' +  fileName);
 							outputChannel.appendLine('File Path: ' + filePath);
 						outputChannel.appendLine('Folder Path: ' + folderPath);
-
-						//runProjectWithInputFile(fileName, filePath, flitsr_arg, outputChannel);
-						runProjectWithInputFolder(folderPath,  outputChannel);
-						
+						if (fileName == 'Not provided'  && folderPath == 'Not provided'){
+							outputChannel.appendLine('Please provide either a file or a folder to proceed');
+							outputChannel.appendLine("--------------------------------------------------------------------------------------------------------------------");
+						}
+						else if (folderPath == 'Not provided'){
+							runProjectWithInputFile(fileName, filePath, flitsr_arg, outputChannel);
+							}
+						else if (fileName == 'Not provided'){
+							runProjectWithInputFolder(folderPath,  outputChannel);
+							}
 					} catch (error) {
 						outputChannel.appendLine('Error reading file: ' + error.message);
 					}

@@ -17,13 +17,14 @@ async function runProjectWithInputFile(fileName, dir, userInput, outputChannel) 
         }
 		if (userInput == 'all') {
 			outputChannel.appendLine(`Done. Check the corresponding folder for output files.`)
+			outputChannel.appendLine("--------------------------------------------------------------------------------------------------------------------");
 		}
 		else {
 			outputChannel.appendLine(`Output for "${userInput}" : ${stdout}`);
-			outputChannel.appendLine("Done");
+			outputChannel.appendLine("----------------------------------------------- Done ---------------------------------------------");
+			
 		}
     });
-	//console.log("Done");	
 }
 
 module.exports = {
