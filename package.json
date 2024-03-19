@@ -23,7 +23,11 @@
     {
       "command": "flitsr-extension-demo.showInputPanel",
       "title": "Show Input Panel"
-    }]
+    },
+    {
+    "command": "flitsr-extension-demo.showPlottingInputPanel",
+    "title": "Show Plotting Input Panel"
+  }]
   },
   "scripts": {
     "lint": "eslint .",

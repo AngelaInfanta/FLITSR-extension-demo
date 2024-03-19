@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #000000;
+        }
+
+        .input-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="file"] {
+            padding: 8px;
+            width: 300px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007acc;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #005f80;
+        }
+
+        .info-icon {
+            cursor: pointer;
+            border: 1px solid white;
+            border-radius: 50%;
+            padding: 5px;
+            margin-left: 5px;
+            font-size: 14px;
+            background-color: #007acc;
+            color: white;
+        }
+
+        .info-text {
+            display: none;
+            position: absolute;
+            top: 0;
+            width: 250px;
+            color: black;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 5px;
+            z-index: 1;
+        }
+
+        .input-container:hover .info-text {
+            display: block;
+        }
+
+        input[type="checkbox"] {
+            transform: scale(1.5);
+            margin-right: 10px;
+        }
+
+        .input-container label {
+            display: inline-block;
+            margin-bottom: 0;
+            margin-right: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Enter Your Inputs</h1>
+    <form id="inputForm">
+        <label for="metrics">Metrics:</label><br>
+        <div class="input-container">
+            <input type="checkbox" id="metric1" name="metrics" value="Harmonic">
+            <label for="metric1">Harmonic</label>
+            <input type="checkbox" id="metric2" name="metrics" value="Tarantula">
+            <label for="metric2">Tarantula</label>
+            <input type="checkbox" id="metric3" name="metrics" value="Gp13">
+            <label for="metric3">Gp13</label>
+            <input type="checkbox" id="metric4" name="metrics" value="Dstar">
+            <label for="metric4">Dstar</label>
+            <input type="checkbox" id="metric5" name="metrics" value="Barinel">
+            <label for="metric5">Barinel</label>
+            <input type="checkbox" id="metric6" name="metrics" value="Hyperbolic">
+            <label for="metric6">Hyperbolic</label>
+            <input type="checkbox" id="metric7" name="metrics" value="Jaccard">
+            <label for="metric7">Jaccard</label>
+            <input type="checkbox" id="metric8" name="metrics" value="Naish2">
+            <label for="metric8">Naish2</label>
+            <input type="checkbox" id="metric9" name="metrics" value="Zoltar">
+            <label for="metric9">Zoltar</label>
+            <input type="checkbox" id="metric10" name="metrics" value="Overlap">
+            <label for="metric10">Overlap</label>
+            <input type="checkbox" id="metric11" name="metrics" value="Ochiai">
+            <label for="metric11">Ochiai</label>
+        </div><br><br>
+
+        <label for="flitsrs">FLITSRs:</label><br>
+        <div class="input-container" id="flitsrsContainer">
+            <!-- FLITSRs checkboxes will be dynamically populated here -->
+        </div><br><br>
+
+        <label for="file">Select Input File:</label><br>
+        <input type="file" id="file" name="file"><br><br>
+
+        <input type="submit" value="Submit">
+        <input type="hidden" id="formData" name="formData">
+    </form>
+    <div id="output"></div>
+
+    <script>
+        const vscode = acquireVsCodeApi();
+        const form = document.getElementById('inputForm');
+        const output = document.getElementById('output');
+
+        const flitsrsContainer = document.getElementById('flitsrsContainer');
+
+        // Define FLITSRs options based on the selected metrics
+        const flitsrsOptions = {
+            Harmonic: ['Harmonic'],
+            Tarantula: ['Tarantula'],
+            Gp13: ['Gp13'],
+            Dstar: ['Dstar'],
+            Barinel: ['Barinel'],
+            Hyperbolic: ['Hyperbolic'],
+            Jaccard: ['Jaccard'],
+            Naish2: ['Naish2'],
+            Zoltar: ['Zoltar'],
+            Overlap: ['Overlap'],
+            Ochiai: ['Ochiai']
+        };
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const metrics = Array.from(document.querySelectorAll('input[name="metrics"]:checked')).map(input => `'${input.value}'`);
+            const flitsrs = Array.from(document.querySelectorAll('input[name="flitsrs"]:checked')).map(input => `'${input.value}'`);
+            const file = document.getElementById('file').files[0];
+            const fileName = file ? file.name : 'Not provided';
+            const filePath = file ? file.path.split('/').slice(0, -1).join('/') : 'Not provided';
+            const formData = JSON.stringify({ metrics, flitsrs, fileName, filePath });
+            document.getElementById('formData').value = formData;
+            vscode.postMessage({
+                command: 'submitForm',
+                data: formData
+            });
+        });
+
+        // Update FLITSRs options based on selected metrics
+        form.addEventListener('change', (event) => {
+            if (event.target.name === 'metrics') {
+                const selectedMetrics = Array.from(document.querySelectorAll('input[name="metrics"]:checked')).map(input => input.value);
+                while (flitsrsContainer.firstChild) {
+                    flitsrsContainer.removeChild(flitsrsContainer.firstChild);
+                }
+                selectedMetrics.forEach(metric => {
+                    if (flitsrsOptions[metric]) {
+                        flitsrsOptions[metric].forEach(flitsr => {
+                            const checkbox = document.createElement('input');
+                            checkbox.type = 'checkbox';
+                            checkbox.id = flitsr;
+                            checkbox.name = 'flitsrs';
+                            checkbox.value = flitsr;
+                            const label = document.createElement('label');
+                            label.setAttribute('for', flitsr);
+                            label.textContent = flitsr;
+                            flitsrsContainer.appendChild(checkbox);
+                            flitsrsContainer.appendChild(label);
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
