@@ -2,68 +2,111 @@
 <html>
 <head>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #000000;
+        }
+
         .input-container {
             position: relative;
-            display: inline-block; /* Keep icons inline */
-            margin-right: 20px; /* Add some space between input and icon */
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="file"] {
+            padding: 8px;
+            width: 300px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007acc;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #005f80;
         }
 
         .info-icon {
             cursor: pointer;
             border: 1px solid white;
-            border-radius: 50%; /* Rounded border */
-            padding: 2px 5px;
-        }
-
-        .info-icon:hover {
-            color: yellow; /* Change font color on hover */
+            border-radius: 50%;
+            padding: 5px;
+            margin-left: 5px;
+            font-size: 14px;
+            background-color: #007acc;
+            color: white;
         }
 
         .info-text {
             display: none;
-            position: absolute;
+            position: relative;
             top: 0;
             width: 300px;
             color: black;
-            left: calc(100% + 5px); /* Position to the right of the icon */
+            left: calc(15px); /* Position to the right of the icon */
             padding: 5px;
             background-color: #f0f0f0;
             border: 1px solid #ccc;
         }
 
         .input-container:hover .info-text {
-            display: block; /* Show text block on hover */
+            display: block;
+        }
+
+        input[type="radio"] {
+            transform: scale(1.5);
+            margin-right: 10px;
+        }
+
+        .input-container label {
+            display: inline-block;
+            margin-bottom: 0;
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
     <h1>Enter Your Inputs</h1>
     <form id="inputForm">
-        <label for="flitsr_arg">Flitsr arguments :    </label>
-        <div class="input-container">
-            <input type="text" id="flitsr_arg" name="flitsr_arg">
-            <span class="info-icon" onmouseover="showInfo('flitsr-info')" onmouseout="hideInfo('flitsr-info')">i</span>
-            <div id="flitsr-info" class="info-text">
-                Enter your preferred usage from the output guide as given. Ignore "flitsr input_file". Use any of the arguments from the rest.
-            </div>
+        <label for="isTrue">File type:</label>
+        <input type="radio" id="isTrue" name="isTrue" value="true">TCM
+        <input type="radio" id="isFalse" name="isTrue" value="false">GZoltar
+        <br><br>
+
+        <label for="flitsr_arg">Flitsr arguments:</label><br>
+        <input type="text" id="flitsr_arg" name="flitsr_arg">
+        <span class="info-icon" onmouseover="showInfo('flitsr-info')" onmouseout="hideInfo('flitsr-info')">i</span>
+        <div id="flitsr-info" class="info-text">
+            Enter your preferred usage from the output guide as given. Ignore "flitsr input_file". Use any of the arguments from the rest.
         </div>
         <br><br>
-        <label for="file">Select Input File:</label>
-        <div class="input-container">
-            <input type="file" id="file" name="file">
-            <span class="info-icon" onmouseover="showInfo('file-info')" onmouseout="hideInfo('file-info')">i</span>
-            <div id="file-info" class="info-text">
-                Upload the input file if you want to see the localisation output for a particular fault at particular input file.
-            </div>
+        <label for="file">Select Input File:</label><br>
+        <input type="file" id="file" name="file">
+        <span class="info-icon" onmouseover="showInfo('file-info')" onmouseout="hideInfo('file-info')">i</span>
+        <div id="file-info" class="info-text">
+            Upload the input file if you want to see the localisation output for a particular fault at particular input file.
         </div>
         <br><br>
-        <label for="folder">Select Input Folder:</label>
-        <div class="input-container">
-            <input type="file" id="folder" name="folder" webkitdirectory directory>
-            <span class="info-icon" onmouseover="showInfo('folder-info')" onmouseout="hideInfo('folder-info')">i</span>
-            <div id="folder-info" class="info-text">
-                Upload the input folder of n-th fault if you want to see overall results for all possible flitsr arguments. It also generates the percent_at_n and the results file.
-            </div>
+        <label for="folder">Select Input Folder:</label><br>
+        <input type="file" id="folder" name="folder" webkitdirectory directory>
+        <span class="info-icon" onmouseover="showInfo('folder-info')" onmouseout="hideInfo('folder-info')">i</span>
+        <div id="folder-info" class="info-text">
+            Upload the input folder of n-th fault if you want to see overall results for all possible flitsr arguments. It also generates the percent_at_n and the results file.
         </div>
         <br><br>
         <input type="submit" value="Submit">
@@ -91,13 +134,14 @@
             event.preventDefault();
             const flitsr_arg = document.getElementById('flitsr_arg').value;
             const fileInput = document.getElementById('file');
-			const file = fileInput.files.length > 0 ? fileInput.files[0] : null;
-			const folderInput = document.getElementById('folder');
-			const folder = folderInput.files.length > 0 ? folderInput.files[0] : null;
+            const file = fileInput.files.length > 0 ? fileInput.files[0] : null;
+            const folderInput = document.getElementById('folder');
+            const folder = folderInput.files.length > 0 ? folderInput.files[0] : null;
             const fileName = file ? file.name : 'Not provided';
             const filePath = file ? file.path.split('/').slice(0, -1).join('/') : 'Not provided';
             const folderPath = folder ? folder.path.split('/').slice(0, -1).join('/') : 'Not provided';
-            const formData = JSON.stringify({ flitsr_arg, fileName, filePath, folderPath });
+            const isTCM = document.querySelector('input[name="isTrue"]:checked').value;
+            const formData = JSON.stringify({ flitsr_arg, fileName, filePath, folderPath, isTCM });
             document.getElementById('formData').value = formData;
             vscode.postMessage({
                 command: 'submitForm',
