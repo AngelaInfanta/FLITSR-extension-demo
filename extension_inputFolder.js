@@ -6,11 +6,17 @@ const vscode = require('vscode');
 //example: /home/java_bug_projects/TCM/Jester1.37b_tests/8-fault
 //example: run_all tcm
 
-function runProjectWithInputFolder(inputFolderPath, outputChannel) {
+function runProjectWithInputFolder(inputFolderPath, type, outputChannel) {
     const FLITSR_HOME= '/home/angela/Desktop/FLITSR/flitsr';
 	const PATH= `${FLITSR_HOME}/bin`;
-	//const command1= `${FLITSR_HOME}/bin/flitsr`;	
-	const command1 = `${PATH}/run_all tcm`;
+	//const command1= `${FLITSR_HOME}/bin/flitsr`;
+	var command1;
+	if(type == 'true'){
+		command1 = `${PATH}/run_all tcm`;
+	}	
+	else{
+		command1 = `${PATH}/run_all`;
+	}
 
 	vscode.window.showInformationMessage("Command ran : ", command1);
 
