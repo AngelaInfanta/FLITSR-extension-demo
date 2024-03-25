@@ -84,8 +84,8 @@
     <h1>Enter Your Inputs</h1>
     <form id="inputForm">
         <label for="isTrue">File type:</label>
-        <input type="radio" id="isTrue" name="isTrue" value="true">TCM
-        <input type="radio" id="isFalse" name="isTrue" value="false">GZoltar
+        <input type="radio" id="isTrue" name="isTrue" value="true" onclick="deactivateField(id, false)">TCM
+        <input type="radio" id="isFalse" name="isTrue" value="false" onclick="deactivateField(id, true)">GZoltar
         <br><br>
 
         <label for="flitsr_arg">Flitsr arguments:</label><br>
@@ -125,6 +125,11 @@
             infoText.style.display = 'none';
         }
 
+        function deactivateField(id, value) {
+            const radio = document.getElementById(id);
+            const inputField = document.getElementById('file');
+            inputField.disabled = value;
+        }
         const vscode = acquireVsCodeApi();
 
         const form = document.getElementById('inputForm');
