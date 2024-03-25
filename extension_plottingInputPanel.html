@@ -118,6 +118,26 @@
         <label for="file">Select Input File:</label><br>
         <input type="file" id="file" name="file"><br><br>
 
+        <label for="mode">Mode Option:</label><br>
+        <div class="input-container">
+            <input type="checkbox" id="mode" name="mode" value="mode">
+            <label for="mode">Mode</label>
+        </div><br><br>
+
+        <label for="linear">Linear/Log:</label><br>
+        <div class="input-container">
+            <input type="radio" id="log" name="linearLog" value="log"  checked>
+            <label for="log">Log</label>
+            <input type="radio" id="linear" name="linearLog" value="linear">
+            <label for="linear">Linear</label>
+        </div><br><br>
+
+        <label for="all">All:</label><br>
+        <div class="input-container">
+            <input type="checkbox" id="all" name="all" value="all">
+            <label for="all">All</label>
+        </div><br><br>
+
         <input type="submit" value="Submit">
         <input type="hidden" id="formData" name="formData">
     </form>
@@ -152,7 +172,13 @@
             const file = document.getElementById('file').files[0];
             const fileName = file ? file.name : 'Not provided';
             const filePath = file ? file.path.split('/').slice(0, -1).join('/') : 'Not provided';
-            const formData = JSON.stringify({ metrics, flitsrs, fileName, filePath });
+            const isMode = document.getElementById('mode').checked;
+            const mode = isMode ? 'mode' : ' ';
+            const isLinearLog = document.querySelector('input[name="linearLog"]:checked').value;
+            const linearLog = isLinearLog ? isLinearLog : ' ';
+            const isAll = document.getElementById('all').checked;
+            const all = isAll ? 'all': ' ';
+            const formData = JSON.stringify({ metrics, flitsrs, mode, linearLog, all, fileName, filePath });
             document.getElementById('formData').value = formData;
             vscode.postMessage({
                 command: 'submitForm',
@@ -183,6 +209,18 @@
                         });
                     }
                 });
+            }
+
+            if (event.target.name === 'all') {
+                if (event.target.checked) {
+                    document.getElementById('mode').checked = false;
+                }
+            }
+
+            if (event.target.name === 'mode') {
+                if (event.target.checked) {
+                    document.getElementById('all').checked = false;
+                }
             }
         });
     </script>

@@ -103,19 +103,22 @@ function activate(context) {
 		panel2.webview.onDidReceiveMessage(message => {
 			switch (message.command) {
 				case 'submitForm':
-					const { metrics, flitsrs, fileName, filePath} = JSON.parse(message.data);
+					const { metrics, flitsrs, mode, linearLog, all, fileName, filePath} = JSON.parse(message.data);
 					// Process the file path and show the output in the output channel
 					try {					
 							outputChannel.appendLine('Input metrics: ' + metrics);
 							outputChannel.appendLine('Input flitsrs: ' + flitsrs);
 							outputChannel.appendLine('File Name: ' +  fileName);
 							outputChannel.appendLine('File Path: ' + filePath);
+							outputChannel.appendLine('Mode: ' + mode);
+							outputChannel.appendLine('Linear/Log: ' +  linearLog);
+							outputChannel.appendLine('All?: ' + all);
 						if (filePath == 'Not provided' || fileName != 'perc_at_n_results'){
 							outputChannel.appendLine('Please provide a perc_at_n_results file to proceed');
 							outputChannel.appendLine("--------------------------------------------------------------------------------------------------------------------");
 						}
 						else {
-							inputPercent_at_n_file(filePath, fileName, metrics, flitsrs, outputChannel);
+							inputPercent_at_n_file(filePath, fileName, metrics, flitsrs, mode, linearLog, all, outputChannel);
 							}
 					} catch (error) {
 						outputChannel.appendLine('Error reading file: ' + error.message);
