@@ -5,14 +5,10 @@ const vscode = require('vscode');
 //Function for input folder containing coverage files
 //example: /home/java_bug_projects/TCM/Jester1.37b_tests/8-fault
 
-function runProjectWithInputFolder(inputFolderPath, type, outputChannel) {
-    const FLITSR_HOME= '/home/angela/Desktop/FLITSR/flitsr';
+function runProjectWithInputFolder(FLITSR_HOME, VENV_PATH, env, inputFolderPath, type, outputChannel) {
 	const PATH= `${FLITSR_HOME}/bin`;
-
-	const env = Object.create(process.env);
-	env.PATH = `${FLITSR_HOME}${path.delimiter}${PATH}${path.delimiter}${env.PATH}`;
 	
-	var command1, command2, childProcess1,childProcess2;
+	var command1, command2, childProcess1;
 
 	// if type is tcm-java then:
 	if(type == 'true'){
@@ -21,7 +17,7 @@ function runProjectWithInputFolder(inputFolderPath, type, outputChannel) {
 		command1 = `${PATH}/run_all tcm`;
 		vscode.window.showInformationMessage("Command ran : ", command1);
 
-		childProcess1 = exec(command1, { cwd: inputFolderPath, env: env.PATH});
+		childProcess1 = exec(command1, { cwd: inputFolderPath, env: env});
 		childProcess1.stdout.on('data', (data) => {
 			outputChannel.appendLine(`stdout: ${data}`);
 		});
@@ -43,45 +39,41 @@ function runProjectWithInputFolder(inputFolderPath, type, outputChannel) {
 		const slicedPath = inputFolderPath.substring(0, inputFolderPath.lastIndexOf(pattern) + 1);
 		outputChannel.appendLine("Current directory: " + slicedPath);
 		//`flitsr sfl/txt/ all`;
-		command1 = `python3 /home/angela/Desktop/FLITSR/flitsr/flitsr "$@" txt/ all`;
-		vscode.window.showInformationMessage("Command ran : ", command1);
-		outputChannel.appendLine(`TYPE: GZOLTAR (JAVA)---------------------------->`);
-
-		childProcess1 = exec(command1, { cwd: slicedPath, env: env.PATH});
-		childProcess1.stdout.on('data', (data) => {
-			outputChannel.appendLine(`stdout: ${data}`);
-		});
-		childProcess1.stderr.on('data', (data) => {
-			outputChannel.appendLine(`stderr: ${data}`);
-		});
-		childProcess1.on('close', (code) => {
-			outputChannel.appendLine(`Results generating..`);
-			if (code == 0){
-				outputChannel.appendLine(`Done generating .txt files for all the metrics.`);
-			}
-		});
-
-		//run_all
+		command1 = `${VENV_PATH} -m flitsr "$@" sfl/txt/ all`;
 		command2 = `${PATH}/run_all`;
+		vscode.window.showInformationMessage("Command ran : ", command1);
+		outputChannel.appendLine(`TYPE: GZOLTAR (JAVA)-: Doing cmd1: --------------------------->`);
 
-		outputChannel.appendLine("--------------------------Doing a 'rull_all'------------------------------------");
-		vscode.window.showInformationMessage("Command ran : ", command2);
-
-		childProcess2 = exec(command2, { cwd: slicedPath, env: env.PATH});
-		childProcess2.stdout.on('data', (data) => {
-			outputChannel.appendLine(`stdout: ${data}`);
-		});
-		childProcess2.stderr.on('data', (data) => {
-			outputChannel.appendLine(`stderr: ${data}`);
-		});
-		childProcess2.on('close', (code) => {
-			outputChannel.appendLine(`Results generating for run_all..`);
-			if (code == 0){
-				outputChannel.appendLine(`Check the corresponding folder for generated results in the format __.results.`);
-				outputChannel.appendLine(`Done generating results & perc_n_results.`);
-				outputChannel.appendLine("-------------------------------------------------------------------------");
+		exec(command1, { cwd: slicedPath, env:env }, (error1, stdout1, stderr1) => {
+			if (error1) {
+				outputChannel.appendLine(`Error executing command1: ${error1}`);
+				return;
 			}
+			if (stderr1) {
+				outputChannel.appendLine(`Std Error cmd1: ${stderr1}`);
+			}
+			if (stdout1) {
+				outputChannel.appendLine(`Std Out cmd1: ${stdout1}`);
+			}
+			outputChannel.appendLine(`Done generating .txt files for all the metrics.`);
+		
+			exec(command2, { cwd: slicedPath, env:env }, (error2, stdout2, stderr2) => {
+				if (error2) {
+					outputChannel.appendLine(`Error executing run_all script: ${error2}`);
+		
+				}
+				if (stderr2) {
+					outputChannel.appendLine(`Std Error (run_all): ${stderr2}`);
+					return;
+				}
+				if (stdout2) {
+					outputChannel.appendLine(`Std Out (run_all): ${stdout2}`);
+				}
+				
+			});
+			outputChannel.appendLine("----------------------------------------------- Done generating results & perc_n_results.---------------------------------------------");
 		});
+		outputChannel.appendLine("----------------------------------------------- Done---------------------------------------------");
 	}
 }
 

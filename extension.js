@@ -22,9 +22,17 @@ function activate(context) {
 	const outputChannel = vscode.window.createOutputChannel('Output Panel');
 
 	outputChannel.appendLine('Congratulations, your extension "flitsr-extension-demo" is now active!');
+
+	const FLITSR_HOME = '/home/angela/Desktop/FLITSR_v2/flitsr';
+	const VENV_PATH = `${FLITSR_HOME}/.venv/bin/python3`;
+
+	const env = Object.create(process.env);
+	env.PATH = `${FLITSR_HOME}/bin:${env.PATH}`;
+	env.PYTHONPATH = `${FLITSR_HOME}:${env.PYTHONPATH || ''}`;
+
+	const command = `${VENV_PATH} -m flitsr "$@"`;	
 	
-	const command = `python3 /home/angela/Desktop/FLITSR/flitsr/flitsr "$@" `;
-	exec(command, (error, stdout, stderr) => {
+	exec(command, { env: env}, (error, stdout, stderr) => {
         if (error) {
             outputChannel.appendLine(`Error executing command: ${error}`);
             return;
@@ -67,10 +75,10 @@ function activate(context) {
 							outputChannel.appendLine("--------------------------------------------------------------------------------------------------------------------");
 						}
 						else if (folderPath == 'Not provided'){
-							runProjectWithInputFile(fileName, filePath, flitsr_arg, outputChannel);
+							runProjectWithInputFile(VENV_PATH, env, fileName, filePath, flitsr_arg, outputChannel);
 							}
 						else if (fileName == 'Not provided'){
-							runProjectWithInputFolder(folderPath, isTCM, outputChannel);
+							runProjectWithInputFolder(FLITSR_HOME, VENV_PATH, env, folderPath, isTCM, outputChannel);
 							}
 					} catch (error) {
 						outputChannel.appendLine('Error reading file: ' + error.message);
@@ -118,7 +126,7 @@ function activate(context) {
 							outputChannel.appendLine("--------------------------------------------------------------------------------------------------------------------");
 						}
 						else {
-							inputPercent_at_n_file(filePath, fileName, metrics, flitsrs, mode, linearLog, all, outputChannel);
+							inputPercent_at_n_file(VENV_PATH, env, filePath, fileName, metrics, flitsrs, mode, linearLog, all, outputChannel);
 							}
 					} catch (error) {
 						outputChannel.appendLine('Error reading file: ' + error.message);

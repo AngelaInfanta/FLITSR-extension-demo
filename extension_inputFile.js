@@ -2,12 +2,12 @@
 const { exec } = require('child_process');
 const vscode = require('vscode');
 
-async function runProjectWithInputFile(fileName, dir, userInput, outputChannel) {
+async function runProjectWithInputFile(VENV_PATH, env, fileName, dir, userInput, outputChannel) {
 
-	const command = `python3 /home/angela/Desktop/FLITSR/flitsr/flitsr "$@" '${fileName}' ${userInput}`;
+	const command = `${VENV_PATH} -m flitsr "$@" '${fileName}' ${userInput}`;
 	//const command= `python3 ${FLITSR_HOME}/flitsr "$@"`;
 	vscode.window.showInformationMessage("Command ran : ", command);
-    exec(command, { cwd: dir }, (error, stdout, stderr) => {
+    exec(command, { cwd: dir, env: env }, (error, stdout, stderr) => {
         if (error) {
             outputChannel.appendLine(`Error executing command: ${error}`);
             return;
