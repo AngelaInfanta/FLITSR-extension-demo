@@ -4,15 +4,29 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
             padding: 0;
-            background-color: #000000;
+            background-color: #333;
+            color: #fff;
         }
 
-        .input-container {
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #444;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #ffffff;
+        }
+
+        form {
+            margin-top: 20px;
             position: relative;
-            display: inline-block;
-            margin-bottom: 20px;
         }
 
         label {
@@ -24,8 +38,12 @@
         input[type="text"],
         input[type="file"] {
             padding: 8px;
-            width: 300px;
+            width: 100%;
             box-sizing: border-box;
+            margin-bottom: 10px;
+            background-color: #555;
+            border: none;
+            color: #fff;
         }
 
         input[type="submit"] {
@@ -43,25 +61,33 @@
 
         .info-icon {
             cursor: pointer;
-            border: 1px solid white;
+            border: 1px solid #007acc;
             border-radius: 50%;
-            padding: 5px;
-            margin-left: 5px;
-            font-size: 14px;
+            padding-left: 5px;
+            padding-right: 5px;
+            margin-bottom: 15px;
             background-color: #007acc;
             color: white;
+            position: absolute;
+            left: calc(17%);
         }
 
         .info-text {
             display: none;
-            position: relative;
-            top: 0;
-            width: 300px;
+            position: absolute;
+            top: 0%;
+            left: calc(20%);
+            transform: translateY(-25%);
+            padding: 10px;
+            background-color: #fff;
             color: black;
-            left: calc(15px); /* Position to the right of the icon */
-            padding: 5px;
-            background-color: #f0f0f0;
             border: 1px solid #ccc;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .input-container {
+            position: relative;
         }
 
         .input-container:hover .info-text {
@@ -75,44 +101,57 @@
 
         .input-container label {
             display: inline-block;
-            margin-bottom: 0;
-            margin-right: 10px;
+            margin-bottom: 10px;
+            margin-right: 15px;
+            position: relative;
         }
     </style>
 </head>
 <body>
-    <h1>Enter Your Inputs</h1>
-    <form id="inputForm">
-        <label for="isTrue">File type:</label>
-        <input type="radio" id="isTrue" name="isTrue" value="true" onclick="deactivateField(id, false)">TCM
-        <input type="radio" id="isFalse" name="isTrue" value="false" onclick="deactivateField(id, true)">GZoltar
-        <br><br>
+    <div class="container">
+        <h1>FLITSR Fault Localisation - Input</h1>
+        <form id="inputForm">
+            <div class="input-container">
+                <label for="isTrue">File type:</label>
+                <input type="radio" id="isTrue" name="isTrue" value="true" onclick="deactivateField(id, false)"> TCM
+                <input type="radio" id="isFalse" name="isTrue" value="false" onclick="deactivateField(id, true)"> GZoltar
+            </div>
+            <br>
 
-        <label for="flitsr_arg">Flitsr arguments:</label><br>
-        <input type="text" id="flitsr_arg" name="flitsr_arg">
-        <span class="info-icon" onmouseover="showInfo('flitsr-info')" onmouseout="hideInfo('flitsr-info')">i</span>
-        <div id="flitsr-info" class="info-text">
-            Enter your preferred usage from the output guide as given. Ignore "flitsr input_file". Use any of the arguments from the rest.
-        </div>
-        <br><br>
-        <label for="file">Select Input File:</label><br>
-        <input type="file" id="file" name="file">
-        <span class="info-icon" onmouseover="showInfo('file-info')" onmouseout="hideInfo('file-info')">i</span>
-        <div id="file-info" class="info-text">
-            Upload the input file if you want to see the localisation output for a particular fault at particular input file.
-        </div>
-        <br><br>
-        <label for="folder">Select Input Folder:</label><br>
-        <input type="file" id="folder" name="folder" webkitdirectory directory>
-        <span class="info-icon" onmouseover="showInfo('folder-info')" onmouseout="hideInfo('folder-info')">i</span>
-        <div id="folder-info" class="info-text">
-            Upload the input folder of n-th fault if you want to see overall results for all possible flitsr arguments. It also generates the percent_at_n and the results file.
-        </div>
-        <br><br>
-        <input type="submit" value="Submit">
-        <input type="hidden" id="formData" name="formData">
-    </form>
-    <div id="output"></div>
+            <div class="input-container">
+                <label for="flitsr_arg">Flitsr arguments:</label>
+                <span class="info-icon" onmouseover="showInfo('flitsr-info')" onmouseout="hideInfo('flitsr-info')">i</span>
+                <input type="text" id="flitsr_arg" name="flitsr_arg">
+                <div id="flitsr-info" class="info-text">
+                    Enter your preferred usage from the output guide as given. Ignore "flitsr input_file". Use any of the arguments from the rest.
+                </div>
+            </div>
+            <br>
+
+            <div class="input-container">
+                <label for="file">Select Input File:</label>
+                <span class="info-icon" onmouseover="showInfo('file-info')" onmouseout="hideInfo('file-info')">i</span>
+                <input type="file" id="file" name="file">
+                <div id="file-info" class="info-text">
+                    Upload the input file if you want to see the localisation output for a particular fault at particular input file.
+                </div>
+            </div>
+            <br>
+
+            <div class="input-container">
+                <label for="folder">Select Input Folder:</label>
+                <span class="info-icon" onmouseover="showInfo('folder-info')" onmouseout="hideInfo('folder-info')">i</span>
+                <input type="file" id="folder" name="folder" webkitdirectory directory>
+                <div id="folder-info" class="info-text">
+                    Upload the input folder of n-th fault if you want to see overall results for all possible flitsr arguments. It also generates the percent_at_n and the results file.
+                </div>
+            </div>
+            <br><br>
+            <input type="submit" value="Submit">
+            <input type="hidden" id="formData" name="formData">
+        </form>
+        <div id="output"></div>
+    </div>
 
     <script>
         function showInfo(id) {

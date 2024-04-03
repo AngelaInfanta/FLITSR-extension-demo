@@ -1,89 +1,120 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 0;
-            background-color: #000000;
-        }
-
-        .input-container {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="file"] {
-            padding: 8px;
-            width: 300px;
-            box-sizing: border-box;
-        }
-
-        input[type="submit"] {
-            padding: 10px 20px;
-            background-color: #007acc;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #005f80;
-        }
-
-        .info-icon {
-            cursor: pointer;
-            border: 1px solid white;
-            border-radius: 50%;
-            padding: 5px;
-            margin-left: 5px;
-            font-size: 14px;
-            background-color: #007acc;
-            color: white;
-        }
-
-        .info-text {
-            display: none;
-            position: absolute;
-            top: 0;
-            width: 250px;
-            color: black;
-            background-color: #f0f0f0;
-            border: 1px solid #ccc;
-            padding: 5px;
-            z-index: 1;
-        }
-
-        .input-container:hover .info-text {
-            display: block;
-        }
-
-        input[type="checkbox"] {
-            transform: scale(1.5);
-            margin-right: 10px;
-        }
-
-        .input-container label {
-            display: inline-block;
-            margin-bottom: 0;
-            margin-right: 10px;
-        }
-
-    </style>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #333;
+                color: #fff;
+            }
+    
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #444;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            }
+    
+            h1 {
+                margin-top: 0;
+                color: #ffffff;
+            }
+    
+            form {
+                margin-top: 20px;
+                position: relative;
+            }
+    
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+    
+            input[type="text"],
+            input[type="file"] {
+                padding: 8px;
+                width: 100%;
+                box-sizing: border-box;
+                margin-bottom: 10px;
+                background-color: #555;
+                border: none;
+                color: #fff;
+            }
+    
+            input[type="submit"] {
+                padding: 10px 20px;
+                background-color: #007acc;
+                color: white;
+                border: none;
+                cursor: pointer;
+                font-size: 16px;
+            }
+    
+            input[type="submit"]:hover {
+                background-color: #005f80;
+            }
+    
+            .info-icon {
+                cursor: pointer;
+                border: 1px solid #007acc;
+                border-radius: 50%;
+                padding-left: 5px;
+                padding-right: 5px;
+                margin-bottom: 15px;
+                background-color: #007acc;
+                color: white;
+                position: absolute;
+                left: calc(17%);
+            }
+    
+            .info-text {
+                display: none;
+                position: absolute;
+                top: 0%;
+                left: calc(20%);
+                transform: translateY(-25%);
+                padding: 10px;
+                background-color: #fff;
+                color: black;
+                border: 1px solid #ccc;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                z-index: 1;
+            }
+    
+            .input-container {
+                position: relative;
+            }
+    
+            .input-container:hover .info-text {
+                display: block;
+            }
+    
+            input[type="radio"] {
+                transform: scale(1.5);
+                margin-right: 10px;
+            }
+    
+            .input-container label {
+                display: inline-block;
+                margin-bottom: 10px;
+                margin-right: 15px;
+                position: relative;
+            }
+        </style>
 </head>
 <body>
+    <div class="container">
     <h1>Enter Your Inputs</h1>
     <form id="inputForm">
+        <span class="info-icon" onmouseover="showInfo('metric-info')" onmouseout="hideInfo('metric-info')">i</span>
+        <div id="metric-info" class="info-text">
+            Select one or metric for your plot.
+        </div>
         <label for="metrics">Metrics:</label><br>
         <div class="input-container">
             <input type="checkbox" id="metric1" name="metrics" value="Harmonic">
@@ -108,41 +139,66 @@
             <label for="metric10">Overlap</label>
             <input type="checkbox" id="metric11" name="metrics" value="Ochiai">
             <label for="metric11">Ochiai</label>
-        </div><br><br>
-
-        <label for="flitsrs">FLITSRs:</label><br>
+            <br><br>
+        </div>
+        <span class="info-icon" onmouseover="showInfo('FLITSR-info')" onmouseout="hideInfo('FLITSR-info')">i</span>
+        <div id="FLITSR-info" class="info-text">
+            FLITSRs checkboxes will be dynamically populated here based on the metrics you select from above.
+        </div>
+        <label for="flitsrs">FLITSRs:</label>
         <div class="input-container" id="flitsrsContainer">
             <!-- FLITSRs checkboxes will be dynamically populated here -->
-        </div><br><br>
+        </div><br>
 
-        <label for="file">Select Input File:</label><br>
-        <input type="file" id="file" name="file"><br><br>
-
-        <label for="mode">Mode Option:</label><br>
-        <div class="input-container">
-            <input type="checkbox" id="mode" name="mode" value="mode">
-            <label for="mode">Mode</label>
-        </div><br><br>
-
-        <label for="linear">Linear/Log:</label><br>
-        <div class="input-container">
-            <input type="radio" id="log" name="linearLog" value="log"  checked>
-            <label for="log">Log</label>
-            <input type="radio" id="linear" name="linearLog" value="linear">
-            <label for="linear">Linear</label>
-        </div><br><br>
-
-        <label for="all">All:</label><br>
-        <div class="input-container">
-            <input type="checkbox" id="all" name="all" value="all">
-            <label for="all">All</label>
-        </div><br><br>
-
+        <div class="='input-container">
+            <span class="info-icon" onmouseover="showInfo('file-info')" onmouseout="hideInfo('file-info')">i</span>
+            <div class="input-container">
+                <div id="file-info" class="info-text">
+                    Upload the input file if you want to see the localisation output for a particular fault at particular input file.
+                </div>
+            <label for="file">Select Input File:</label>
+            <input type="file" id="file" name="file"><br><br>
+        </div>
+        </div>
+        <div class="='input-container">
+            <span class="info-icon" onmouseover="showInfo('mode-info')" onmouseout="hideInfo('mode-info')">i</span>
+            <div class="='input-container">
+                <div id="mode-info" class="info-text">
+                    Mode option lets you view a metric for base, FLITSR and FLITSR* algorithms.
+                </div>
+            <label for="mode">Mode Option:</label><br>
+            <input type="checkbox" id="mode" name="mode" value="mode"> Enable Mode
+            </div><br><br>
+        </div>
+        <div class="='input-container">
+            <span class="info-icon" onmouseover="showInfo('ll-info')" onmouseout="hideInfo('ll-info')">i</span>
+            <label for="linear">Linear/Log:</label><br>
+                <div id="ll-info" class="info-text">
+                    Linear plot, log plot
+                </div>
+            <div class="input-container">
+                <input type="radio" id="log" name="linearLog" value="log"  checked>
+                <label for="log">Log</label>
+                <input type="radio" id="linear" name="linearLog" value="linear">
+                <label for="linear">Linear</label>
+            </div><br><br>
+        </div>
+        <div class="='input-container">
+            <span class="info-icon" onmouseover="showInfo('all-info')" onmouseout="hideInfo('all-info')">i</span>
+            <label for="all">All:</label><br>
+            <div id="all-info" class="info-text">
+                View all the metrics consolidated in a single plot w.r.t all the 3 algorithmic approaches.
+            </div>
+            <div class="input-container">
+                <input type="checkbox" id="all" name="all" value="all">
+                <label for="all">All</label>
+            </div><br><br>
+        </div>
         <input type="submit" value="Submit">
         <input type="hidden" id="formData" name="formData">
     </form>
     <div id="output"></div>
-
+    </div>
     <script>
         const vscode = acquireVsCodeApi();
         const form = document.getElementById('inputForm');
@@ -164,7 +220,15 @@
             Overlap: ['Overlap'],
             Ochiai: ['Ochiai']
         };
+        function showInfo(id) {
+            const infoText = document.getElementById(id);
+            infoText.style.display = 'block';
+        }
 
+        function hideInfo(id) {
+            const infoText = document.getElementById(id);
+            infoText.style.display = 'none';
+        }
         form.addEventListener('submit', (event) => {
             event.preventDefault();
             const metrics = Array.from(document.querySelectorAll('input[name="metrics"]:checked')).map(input => `'${input.value}'`);
@@ -220,6 +284,9 @@
             if (event.target.name === 'mode') {
                 if (event.target.checked) {
                     document.getElementById('all').checked = false;
+                    document.querySelectorAll('input[name="flitsrs"]:checked').forEach(checkbox => {
+                        checkbox.checked = false;
+                    });
                 }
             }
         });
