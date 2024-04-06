@@ -1,5 +1,4 @@
 const { exec } = require('child_process');
-const path = require('path');
 const vscode = require('vscode');
 
 //Function for input folder containing coverage files

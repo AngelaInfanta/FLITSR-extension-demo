@@ -1,6 +1,6 @@
 # flitsr-extension-demo README
 
-This is the README for your extension "flitsr-extension-demo". After writing up a brief description, we recommend including the following sections.
+This is the README for the extension "flitsr-extension-demo". This extension is an enhancement of spectrum based fault localisation FLITSR (Fault Localisation using Iterative Test Suite Reduction)for better usability.
 
 ## Features
 

@@ -3,6 +3,9 @@
   "displayName": "flitsr-extension-demo",
   "description": "This is a demo extension for flitsr project version 1",
   "version": "0.0.1",
+  "repository": {
+    "url": "https://github.com/AngelaInfanta/FLITSR-extension-demo.git"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },

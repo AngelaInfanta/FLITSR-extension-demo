@@ -23,9 +23,9 @@ function activate(context) {
 
 	outputChannel.appendLine('Congratulations, your extension "flitsr-extension-demo" is now active!');
 
-	const FLITSR_HOME = '/home/angela/Desktop/FLITSR_v2/flitsr';
+	const FLITSR_HOME = process.env.FLITSR_HOME;
 	const VENV_PATH = `${FLITSR_HOME}/.venv/bin/python3`;
-
+	//console.log(process.env);
 	const env = Object.create(process.env);
 	env.PATH = `${FLITSR_HOME}/bin:${env.PATH}`;
 	env.PYTHONPATH = `${FLITSR_HOME}:${env.PYTHONPATH || ''}`;
