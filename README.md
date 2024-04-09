@@ -1,16 +1,16 @@
 # FLITSR for Visual Studio Code
 
 The FLITSR Extension for Visual Studio Code enhances the fault localization process by providing a user-friendly interface for generating results of fault localization and identification techniques for software faults and failures and visualizing these results. This extension aims to improve the efficiency and effectiveness of fault localization techniques in software development.
-![Input Panel for Fault localisation](extension_images/Show_IP_panel_TCM.gif)
+![Input Panel for Fault localisation](https://media.githubusercontent.com/media/AngelaInfanta/FLITSR-extension-demo/main/extension_images/Show_IP_panel_TCM.gif)
 
 ## Features
 
-- **User-friendly Interface**: Easily select metrics and FLITSRs using checkboxes.
+- **User-friendly Interface**: Avoid the hassle of too many commands to run. Generate the relts and easily select metrics and FLITSRs using checkboxes.
 - **Customizable Selection**: Choose from a variety of metrics and FLITSRs to tailor the fault localization process.
 - **Automated Processing**: Automates the process of fetching metrics and FLITSRs, saving time and effort.
 - **Visualization**: Visualize the results for better understanding and analysis.
 
-![Visualisation of the plots](extension_images/Show_plot_IP_panel.gif)
+![Visualisation of the plots](https://media.githubusercontent.com/media/AngelaInfanta/FLITSR-extension-demo/main/extension_images/Show_plot_IP_panel.gif)
 
 ## Requirements
 
