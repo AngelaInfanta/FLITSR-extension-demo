@@ -70,10 +70,9 @@ function runProjectWithInputFolder(FLITSR_HOME, VENV_PATH, env, inputFolderPath,
 				}
 				
 			});
-			outputChannel.appendLine("----------------------------------------------- Done generating results & perc_n_results.---------------------------------------------");
 		});
-		outputChannel.appendLine("----------------------------------------------- Done---------------------------------------------");
 	}
+	outputChannel.appendLine("----------------------------------------------- Check your folder for corresponding results & perc_n_results.---------------------------------------------");
 }
 
 module.exports = {
