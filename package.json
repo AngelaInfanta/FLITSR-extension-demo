@@ -1,8 +1,10 @@
 {
   "name": "flitsr-extension-demo",
-  "displayName": "flitsr-extension-demo",
-  "description": "This is a demo extension for flitsr project version 1",
+  "displayName": "FLITSR SBFL",
+  "description": "This is an extension for spectrum based software fault localisation project (FLITSR)",
   "version": "0.0.1",
+  "author": {"name": "Angela Infanta Ramesh"},
+  "publisher": "AngelaInfanta",
   "repository": {
     "url": "https://github.com/AngelaInfanta/FLITSR-extension-demo.git"
   },
@@ -15,14 +17,7 @@
   "activationEvents": [],
   "main": "./extension.js",
   "contributes": {
-    "commands": [{
-      "command": "flitsr-extension-demo.uploadCoverageFile",
-      "title": "Upload Coverage File"
-    },
-    {
-      "command": "flitsr-extension-demo.uploadCoverageFolder",
-      "title": "Upload Coverage Folder"
-    },
+    "commands": [
     {
       "command": "flitsr-extension-demo.showInputPanel",
       "title": "Show Input Panel"
@@ -30,7 +25,22 @@
     {
     "command": "flitsr-extension-demo.showPlottingInputPanel",
     "title": "Show Plotting Input Panel"
-  }]
+    }
+  ],
+  "keybindings": [
+    {
+      "command": "flitsr-extension-demo.showInputPanel",
+      "key": "ctrl+i+p",
+      "mac": "cmd+i+p",
+      "when": "editorTextFocus"
+    },
+    {
+      "command": "flitsr-extension-demo.showPlottingInputPanel",
+      "key": "ctrl+p+l",
+      "mac": "cmd+sp+l",
+      "when": "editorTextFocus"
+    }
+  ]
   },
   "scripts": {
     "lint": "eslint .",

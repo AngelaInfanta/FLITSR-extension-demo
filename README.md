@@ -1,65 +1,39 @@
-# flitsr-extension-demo README
+# FLITSR for Visual Studio Code
 
-This is the README for the extension "flitsr-extension-demo". This extension is an enhancement of spectrum based fault localisation FLITSR (Fault Localisation using Iterative Test Suite Reduction)for better usability.
+The FLITSR Extension for Visual Studio Code enhances the fault localization process by providing a user-friendly interface for generating results of fault localization and identification techniques for software faults and failures and visualizing these results. This extension aims to improve the efficiency and effectiveness of fault localization techniques in software development.
+![Input Panel for Fault localisation](extension_images/Show_IP_panel_TCM.gif)
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- **User-friendly Interface**: Easily select metrics and FLITSRs using checkboxes.
+- **Customizable Selection**: Choose from a variety of metrics and FLITSRs to tailor the fault localization process.
+- **Automated Processing**: Automates the process of fetching metrics and FLITSRs, saving time and effort.
+- **Visualization**: Visualize the results for better understanding and analysis.
 
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+![Visualisation of the plots](extension_images/Show_plot_IP_panel.gif)
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+1. Make sure you have the flitsr-modified repository cloned in your system. You can access it from the link: https://github.com/AngelaInfanta/FLITSR-modified.git
+2. Make sure to have $FLITSR_HOME env variable set to this repository in your system.
 
-## Extension Settings
+> Tip: This variable need not be set up explicitly since it is a part of the set up as mentioned in the repository.
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+3. The input data should be strictly in either of the formats: TCM(Java) or Gzoltar.
 
-For example:
+## Usage
 
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
+1. Install the FLITSR Extension from the Visual Studio Code Marketplace.
+2. Open the FLITSR Extension and use the input panel to select metrics and FLITSRs.
+3. Generate results and perc_at_n_results using the input panel.
+4. Use the plotting panel to visualize the results for better analysis.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.0.1
 
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+Initial release
 
 ---
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
 
 **Enjoy!**

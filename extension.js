@@ -21,7 +21,7 @@ function activate(context) {
 
 	const outputChannel = vscode.window.createOutputChannel('Output Panel');
 
-	outputChannel.appendLine('Congratulations, your extension "flitsr-extension-demo" is now active!');
+	outputChannel.appendLine('Congratulations, your extension "FLITSR SBFL" is now active!');
 
 	const FLITSR_HOME = process.env.FLITSR_HOME;
 	const VENV_PATH = `${FLITSR_HOME}/.venv/bin/python3`;
