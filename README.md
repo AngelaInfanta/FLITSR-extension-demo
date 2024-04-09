@@ -14,7 +14,7 @@ The FLITSR Extension for Visual Studio Code enhances the fault localization proc
 
 ## Requirements
 
-1. Make sure you have the flitsr-modified repository cloned in your system. You can access it from the link: https://github.com/AngelaInfanta/FLITSR-modified.git
+1. Make sure you have the flitsr-modified repository cloned in your system. You can access it from the link: https://github.com/AngelaInfanta/FLITSR_modified.git Follow the instructions mentioned in its README.md.
 2. Make sure to have $FLITSR_HOME env variable set to this repository in your system.
 
 > Tip: This variable need not be set up explicitly since it is a part of the set up as mentioned in the repository.
@@ -34,6 +34,8 @@ The FLITSR Extension for Visual Studio Code enhances the fault localization proc
 
 Initial release
 
+### 0.0.2
+Updated README.md
 ---
 
 **Enjoy!**

@@ -2,7 +2,7 @@
   "name": "flitsr-extension-demo",
   "displayName": "FLITSR SBFL",
   "description": "This is an extension for spectrum based software fault localisation project (FLITSR)",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": {"name": "Angela Infanta Ramesh"},
   "publisher": "AngelaInfantaRamesh",
   "icon": "extension_images/FLITSR-SBFL-icon.png",
