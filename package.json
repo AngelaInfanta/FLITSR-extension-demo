@@ -5,7 +5,7 @@
   "version": "0.0.2",
   "author": {"name": "Angela Infanta Ramesh"},
   "publisher": "AngelaInfantaRamesh",
-  "icon": "extension_images/FLITSR-SBFL-icon.png",
+  "icon": "images/FLITSR-SBFL-icon.png",
   "repository": {
     "url": "https://github.com/AngelaInfanta/FLITSR-extension-demo.git"
   },
